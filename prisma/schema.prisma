@@ -1,0 +1,92 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Company {
+  id          String         @id @default(uuid())
+  name        String
+  slug        String         @unique
+  industry    String
+  website     String
+  description String
+  isVerified  Boolean        @default(false)
+  logoUrl     String?        // Optional image/logo
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  // Relations
+  news         News[]
+  socialLinks  SocialLink[]
+  crawlSources CrawledSource[]
+}
+
+model News {
+  id          String   @id @default(uuid())
+  title       String
+  summary     String?
+  content     String
+  sourceUrl   String
+  publishedAt DateTime
+  createdAt   DateTime @default(now())
+  crawledAt   DateTime @default(now())
+  sourceType  SourceType
+
+  // Relations
+  company   Company? @relation(fields: [companyId], references: [id])
+  companyId String?
+
+  tags      String[] // e.g. ["مالی", "سازماندهی", "جذب سرمایه"]
+  isPinned  Boolean  @default(false)
+}
+
+model SocialLink {
+  id        String     @id @default(uuid())
+  platform  SocialType
+  url       String
+  company   Company    @relation(fields: [companyId], references: [id])
+  companyId String
+}
+
+model CrawledSource {
+  id            String      @id @default(uuid())
+  company       Company     @relation(fields: [companyId], references: [id])
+  companyId     String
+  type          CrawlType
+  url           String
+  selector      String?     // Optional for HTML type
+  isActive      Boolean     @default(true)
+  lastFetchedAt DateTime?
+}
+
+enum SourceType {
+  rss
+  website
+  social
+  manual
+}
+
+enum SocialType {
+  twitter
+  linkedin
+  youtube
+  facebook
+  other
+}
+
+enum CrawlType {
+  rss
+  html
+  api
+  manual
+}
