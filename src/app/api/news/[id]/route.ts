@@ -14,7 +14,7 @@ export async function DELETE(
       where: { id: params.id },
     });
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ status: true });
   } catch (error) {
     return NextResponse.json({ error: "News not found" }, { status: 404 });
   }

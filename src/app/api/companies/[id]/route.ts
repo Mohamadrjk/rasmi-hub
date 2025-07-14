@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // app/api/news/[id]/route.ts
-
 import { prisma } from "@/lib/db";
 import { NextResponse } from "next/server";
 
@@ -10,11 +9,10 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    await prisma.news.delete({
+    await prisma.company.delete({
       where: { id: params.id },
     });
-
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ status: true });
   } catch (error) {
     return NextResponse.json({ error: "News not found" }, { status: 404 });
   }
@@ -25,24 +23,26 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   const body = await req.json();
-
   try {
-    const updatedNews = await prisma.news.update({
+    const updatedCompany = await prisma.company.update({
       where: { id: params.id },
-      data: {
-        title: body.title,
-        summary: body.summary,
-        content: body.content,
-        tags: body.tags,
-        //@ts-ignore
-        isVerified: body.isVerified,
-        verifiedBy: body.verifiedBy,
-        verifiedAt: body.verifiedAt ? new Date(body.verifiedAt) : undefined,
-        isPinned: body.isPinned,
-      },
+      data: body,
     });
+    return NextResponse.json(updatedCompany);
+  } catch (error) {
+    return NextResponse.json({ error: "Update failed" }, { status: 400 });
+  }
+}
 
-    return NextResponse.json(updatedNews);
+export async function GET(
+  _req: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const companyDetail = await prisma.company.findFirstOrThrow({
+      where: { id: params.id },
+    });
+    return NextResponse.json(companyDetail);
   } catch (error) {
     return NextResponse.json({ error: "Update failed" }, { status: 400 });
   }

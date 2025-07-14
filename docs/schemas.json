@@ -1,0 +1,90 @@
+{
+  "schemas": {
+    "News": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "isVerified": {
+          "type": "boolean"
+        },
+        "verifiedBy": {
+          "type": "string",
+          "nullable": true
+        },
+        "verifiedAt": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "isPinned": {
+          "type": "boolean"
+        }
+      }
+    },
+    "NewsUpdateInput": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "isVerified": {
+          "type": "boolean"
+        },
+        "verifiedBy": {
+          "type": "string",
+          "nullable": true
+        },
+        "verifiedAt": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "isPinned": {
+          "type": "boolean"
+        }
+      },
+      "required": ["title", "content"]
+    },
+    "Company": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "registrationNumber": { "type": "string" },
+        "nationalId": { "type": "string" },
+        "address": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      }
+    }
+  }
+}

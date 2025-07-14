@@ -1,7 +1,7 @@
 // app/api/docs/route.ts
 import { NextResponse } from "next/server";
-import openApiSpec from "@/docs/openapi.json";
+import { swaggerDocument } from "@/docs/main-docs";
 
 export async function GET() {
-  return NextResponse.json(openApiSpec);
+  return NextResponse.json(swaggerDocument);
 }

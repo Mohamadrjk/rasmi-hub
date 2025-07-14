@@ -1,0 +1,97 @@
+{
+  "/api/news/{id}": {
+    "get": {
+      "tags": ["News"],
+      "summary": "Get news by ID",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "string"
+          },
+          "required": true,
+          "description": "News ID"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "News object retrieved successfully",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/News"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "News not found"
+        }
+      }
+    },
+    "put": {
+      "tags": ["News"],
+      "summary": "Update news by ID",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "string"
+          },
+          "required": true,
+          "description": "News ID"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/NewsUpdateInput"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "News updated successfully",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/News"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Invalid input"
+        }
+      }
+    },
+    "delete": {
+      "tags": ["News"],
+      "summary": "Delete news by ID",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "string"
+          },
+          "required": true,
+          "description": "News ID"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "News deleted successfully"
+        },
+        "404": {
+          "description": "News not found"
+        }
+      }
+    }
+  }
+}
