@@ -99,3 +99,14 @@ enum CrawlType {
   api
   manual
 }
+
+model Claim {
+  id           String   @id @default(cuid())
+  text         String   @db.Text
+  topic        String?  // اقتصاد، سلامت، سیاست، ...
+  verdict      String?  // درست / نادرست / ناقص
+  confidence   Float?
+  matchedUrl   String?  // لینک منبع رسمی
+  matchedTitle String?  // عنوان مقاله یا گزارش رسمی
+  createdAt    DateTime @default(now())
+}

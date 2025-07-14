@@ -85,6 +85,18 @@
         "createdAt": { "type": "string", "format": "date-time" },
         "updatedAt": { "type": "string", "format": "date-time" }
       }
+    },
+    "CompanyCreateInput": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "registrationNumber": { "type": "string" },
+        "nationalId": { "type": "string" },
+        "address": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "address"]
     }
   }
 }
