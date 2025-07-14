@@ -1,0 +1,121 @@
+openapi: 3.0.3
+info:
+  title: RasmiHub API
+  version: 1.0.0
+  description: API documentation for RasmiHub platform.
+
+paths:
+  /api/news/{id}:
+    get:
+      summary: Get news by ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: News ID
+      responses:
+        "200":
+          description: News object retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/News"
+        "404":
+          description: News not found
+    put:
+      summary: Update news by ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: News ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NewsUpdateInput"
+      responses:
+        "200":
+          description: News updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/News"
+        "400":
+          description: Invalid input
+    delete:
+      summary: Delete news by ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: News ID
+      responses:
+        "200":
+          description: News deleted successfully
+        "404":
+          description: News not found
+
+components:
+  schemas:
+    News:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        summary:
+          type: string
+        content:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        isVerified:
+          type: boolean
+        verifiedBy:
+          type: string
+          nullable: true
+        verifiedAt:
+          type: string
+          format: date-time
+          nullable: true
+        isPinned:
+          type: boolean
+
+    NewsUpdateInput:
+      type: object
+      properties:
+        title:
+          type: string
+        summary:
+          type: string
+        content:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        isVerified:
+          type: boolean
+        verifiedBy:
+          type: string
+          nullable: true
+        verifiedAt:
+          type: string
+          format: date-time
+          nullable: true
+        isPinned:
+          type: boolean
+      required:
+        - title
+        - content
